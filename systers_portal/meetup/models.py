@@ -94,6 +94,7 @@ class Meetup(models.Model):
     date = models.DateField(verbose_name="Date")
     end_date = models.DateField(verbose_name="End Date", null=True)
     time = models.TimeField(verbose_name="Time", blank=True)
+    start_time = models.TimeField(verbose_name="Start Time", null=True)
     end_time = models.TimeField(verbose_name="End Time", null=True)
     venue = models.CharField(max_length=512, verbose_name="Venue", blank=True)
     description = models.TextField(verbose_name="Description")

@@ -126,7 +126,10 @@ class AddMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
 
         date = (timezone.now() + timedelta(2)).date()
         time = timezone.now().time()
+        start_time = timezone.now().time()
+        end_time = timezone.now().time()
         data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
+                'start_time': start_time, 'end_time': end_time,
                 'description': "It's a test meetup."}
         form = AddMeetupForm(data=data, created_by=self.user,
                              meetup_location=self.meetup_location)
@@ -175,8 +178,11 @@ class EditMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
 
         date = (timezone.now() + timedelta(2)).date()
         time = timezone.now().time()
+        start_time = timezone.now().time()
+        end_time = timezone.now().time()
 
         data = {'slug': 'foobar', 'title': 'Foo Bar', 'date': date, 'time': time,
+                'start_time': start_time, 'end_time': end_time,
                 'description': "It's a test meetup.", 'venue': 'test address'}
         form = EditMeetupForm(instance=self.meetup, data=data)
         self.assertTrue(form.is_valid())

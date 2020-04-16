@@ -189,7 +189,10 @@ class AddMeetupViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.client.login(username='foo', password='foobar')
         date = (timezone.now() + timezone.timedelta(2)).date()
         time = timezone.now().time()
+        start_time = timezone.now().time()
+        end_time = timezone.now().time()
         data = {'title': 'BarTest', 'slug': 'bartest', 'date': date, 'time': time,
+                'start_time': start_time, 'end_time': end_time,
                 'description': "It's a test meetup."}
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, 302)
@@ -481,7 +484,10 @@ class EditMeetupView(MeetupLocationViewBaseTestCase, TestCase):
 
         date = (timezone.now() + timezone.timedelta(2)).date()
         time = timezone.now().time()
+        start_time = timezone.now().time()
+        end_time = timezone.now().time()
         data = {'title': 'BarTes', 'slug': 'bartes', 'date': date, 'time': time,
+                'start_time': start_time, 'end_time': end_time,
                 'description': "It's a edit test meetup."}
         self.client.login(username='foo', password='foobar')
         response = self.client.post(url, data=data)
