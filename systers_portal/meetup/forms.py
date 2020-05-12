@@ -71,16 +71,23 @@ class RequestMeetupForm(ModelFormWithHelper):
                                         code="date_in_past")
         return date
 
-    def clean_time(self):
-        """Check that if the date is the current date, the time is not the current time. If so,
-        raise an error."""
-        time = self.cleaned_data.get('time')
+    def clean_start_time(self):
+        """Check that if start time today and same time."""
+        start_time = self.cleaned_data.get('start_time')
         date = self.cleaned_data.get('date')
-        if time:
-            if date == timezone.now().date() and time < timezone.now().time():
-                raise forms.ValidationError("Time should not be a time that has already passed.",
-                                            code="time_in_past")
-        return time
+        if start_time:
+            if date == timezone.now().date() and start_time < timezone.now().time():
+                raise forms.ValidationError("Time should not be a time that has already passed.")
+        return start_time
+    
+    def clean_end_time(self):
+        """Check that if start time is less than end time."""
+        start_time = self.cleaned_data.get('start_time')
+        end_time = self.cleaned_data.get('end_time')
+       
+        if end_time < start_time:
+            raise forms.ValidationError("End time should not be less than Start Time.")
+        return end_time
 
 
 class AddMeetupForm(ModelFormWithHelper):
@@ -123,16 +130,25 @@ class AddMeetupForm(ModelFormWithHelper):
         if date < timezone.now().date():
             raise forms.ValidationError("Date should not be before today's date.")
         return date
-
-    def clean_time(self):
-        """Check that if the date is the current date, the time is not the current time. If so,
-        raise an error."""
-        time = self.cleaned_data.get('time')
+    
+    def clean_start_time(self):
+        """Check that if start time today and same time."""
+        start_time = self.cleaned_data.get('start_time')
         date = self.cleaned_data.get('date')
-        if time:
-            if date == timezone.now().date() and time < timezone.now().time():
+
+        if start_time:
+            if date == timezone.now().date() and start_time < timezone.now().time():
                 raise forms.ValidationError("Time should not be a time that has already passed.")
-        return time
+        return start_time
+    
+    def clean_end_time(self):
+        """Check that if start time is less than end time."""
+        start_time = self.cleaned_data.get('start_time')
+        end_time = self.cleaned_data.get('end_time')
+       
+        if end_time < start_time:
+            raise forms.ValidationError("End time should not be less than Start Time.")
+        return end_time
 
 
 class EditMeetupForm(ModelFormWithHelper):

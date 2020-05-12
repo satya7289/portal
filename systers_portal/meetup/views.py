@@ -148,7 +148,8 @@ class ApproveRequestMeetupView(LoginRequiredMixin, PermissionRequiredMixin, Meet
         new_meetup.title = meetup_request.title
         new_meetup.slug = meetup_request.slug
         new_meetup.date = meetup_request.date
-        new_meetup.time = meetup_request.time
+        new_meetup.start_time = meetup_request.start_time
+        new_meetup.end_time = meetup_request.end_time
         new_meetup.venue = meetup_request.venue
         new_meetup.description = meetup_request.description
         new_meetup.meetup_location = meetup_request.meetup_location

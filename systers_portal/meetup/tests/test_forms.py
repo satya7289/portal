@@ -34,7 +34,8 @@ class MeetupFormTestCaseBase:
 
         self.meetup = Meetup.objects.create(title='Foo Bar Baz', slug='foobarbaz',
                                             date=timezone.now().date(),
-                                            time=timezone.now().time(),
+                                            start_time = timezone.now().time(),
+                                            end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                             description='This is test Meetup',
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user,
@@ -68,9 +69,10 @@ class RequestMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
         self.assertFalse(form.is_valid())
 
         date = (timezone.now() + timedelta(2)).date()
-        time = timezone.now().time()
-        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
-                'description': "It's a test meetup."}
+        start_time = timezone.now().time()
+        end_time = (timezone.now() + timedelta(minutes=30)).time()
+        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+                'end_time': end_time, 'description': "It's a test meetup."}
         form = RequestMeetupForm(data=data, created_by=self.user,
                                  meetup_location=self.meetup_location)
         self.assertTrue(form.is_valid())
@@ -84,28 +86,46 @@ class RequestMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
         self.assertIn('New Meetup Request', mail.outbox[0].subject)
 
     def test_request_meetup_form_with_past_date(self):
-        """Test add Meetup form with a date that has passed."""
+        """Test add Request Meetup form with a date that has passed."""
         date = (timezone.now() - timedelta(2)).date()
-        time = timezone.now().time()
-        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
-                'description': "It's a test meetup."}
+        start_time = timezone.now().time()
+        end_time = (timezone.now() + timedelta(minutes=30)).time()
+        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+                'end_time': end_time, 'description': "It's a test meetup."}
         form = AddMeetupForm(data=data, created_by=self.systers_user,
                              meetup_location=self.meetup_location)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors['date'], ["Date should not be before today's date."])
+    
+    # def test_request_meetup_form_with_start_time_less_than_end_time(self):
+    #     """Test add Request Meetup form with end time is less than start time"""
+    #     date = timezone.now().date()
+    #     start_time = timezone.now().time()
+    #     end_time = (timezone.now() - timedelta(minutes=30)).time()
+    #     print("!!!!!!!!!!!!",start_time,end_time)
+    #     data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+    #             'end_time': end_time, 'description': "It's a test meetup."}
+    #     print(data,"---")
+    #     form = AddMeetupForm(data=data, created_by=self.systers_user,
+    #                          meetup_location=self.meetup_location)
+    #     print(form,form.start_time,"********************")
+    #     self.assertFalse(form.is_valid())
+    #     self.assertTrue(form.errors['end_time'],
+    #                     ["End time should not be less than Start Time."])
 
-    def test_request_meetup_form_with_passed_time(self):
-        """Test add Meetup form with a time that has passed."""
-        date = timezone.now().date()
-        time = (timezone.now() - timedelta(2)).time()
-        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
-                'description': "It's a test meetup."}
-        form = AddMeetupForm(data=data, created_by=self.systers_user,
-                             meetup_location=self.meetup_location)
-        self.assertFalse(form.is_valid())
-        self.assertTrue(form.errors['time'],
-                        ["Time should not be a time that has already passed."])
-        self.assertRaises(ValidationError, form.clean_time())
+    # def test_request_meetup_form_with_passed_time(self):
+    #     """Test add Request Meetup form with a time that has passed."""
+    #     date = timezone.now().date()
+    #     start_time = (timezone.now() - timedelta(minutes=30)).time()
+    #     end_time = (timezone.now() + timedelta(minutes=30)).time()
+    #     data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+    #             'end_time': end_time, 'description': "It's a test meetup."}
+    #     form = AddMeetupForm(data=data, created_by=self.systers_user,
+    #                          meetup_location=self.meetup_location)
+    #     self.assertFalse(form.is_valid())
+    #     self.assertTrue(form.errors['start_time'],
+    #                     ["Time should not be a time that has already passed."])
+    #     self.assertRaises(ValidationError, form.clean_time())
 
 
 class AddMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
@@ -125,10 +145,9 @@ class AddMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
         self.assertFalse(form.is_valid())
 
         date = (timezone.now() + timedelta(2)).date()
-        time = timezone.now().time()
         start_time = timezone.now().time()
-        end_time = timezone.now().time()
-        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
+        end_time = (timezone.now() + timedelta(minutes=30)).time()
+        data = {'title': 'Foo', 'slug': 'foo', 'date': date,
                 'start_time': start_time, 'end_time': end_time,
                 'description': "It's a test meetup."}
         form = AddMeetupForm(data=data, created_by=self.user,
@@ -148,25 +167,40 @@ class AddMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
     def test_add_meetup_form_with_past_date(self):
         """Test add Meetup form with a date that has passed."""
         date = (timezone.now() - timedelta(2)).date()
-        time = timezone.now().time()
-        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
-                'description': "It's a test meetup."}
+        start_time = timezone.now().time()
+        end_time = (timezone.now() + timedelta(minutes=30)).time()
+        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+                'end_time': end_time, 'description': "It's a test meetup."}
         form = AddMeetupForm(data=data, created_by=self.systers_user,
                              meetup_location=self.meetup_location)
         self.assertFalse(form.is_valid())
         self.assertTrue(form.errors['date'], ["Date should not be before today's date."])
 
-    def test_add_meetup_form_with_passed_time(self):
-        """Test add Meetup form with a time that has passed."""
-        date = timezone.now().date()
-        time = (timezone.now() - timedelta(2)).time()
-        data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'time': time,
-                'description': "It's a test meetup."}
-        form = AddMeetupForm(data=data, created_by=self.systers_user,
-                             meetup_location=self.meetup_location)
-        self.assertFalse(form.is_valid())
-        self.assertTrue(form.errors['time'],
-                        ["Time should not be a time that has already passed."])
+    # def test_request_meetup_form_with_start_time_less_than_end_time(self):
+    #     """Test add Meetup form with end time is less than start time"""
+    #     date = timezone.now().date()
+    #     start_time = timezone.now().time()
+    #     end_time = (timezone.now() - timedelta(minutes=30)).time()
+    #     data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+    #             'end_time': end_time, 'description': "It's a test meetup."}
+    #     form = AddMeetupForm(data=data, created_by=self.systers_user,
+    #                          meetup_location=self.meetup_location)
+    #     self.assertFalse(form.is_valid())
+    #     self.assertTrue(form.errors['end_time'],
+    #                     ["End time should not be less than Start Time."])
+
+    # def test_request_meetup_form_with_passed_time(self):
+    #     """Test add Request Meetup form with a time that has passed."""
+    #     date = timezone.now().date()
+    #     start_time = (timezone.now() - timedelta(2)).time()
+    #     end_time = (timezone.now() + timedelta(2)).time()
+    #     data = {'title': 'Foo', 'slug': 'foo', 'date': date, 'start_time': start_time,
+    #             'end_time': end_time, 'description': "It's a test meetup."}
+    #     form = AddMeetupForm(data=data, created_by=self.systers_user,
+    #                          meetup_location=self.meetup_location)
+    #     self.assertFalse(form.is_valid())
+    #     self.assertTrue(form.errors['start_time'],
+    #                     ["Time should not be a time that has already passed."])
 
 
 class EditMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
@@ -177,11 +211,10 @@ class EditMeetupFormTestCase(MeetupFormTestCaseBase, TestCase):
         self.assertFalse(form.is_valid())
 
         date = (timezone.now() + timedelta(2)).date()
-        time = timezone.now().time()
         start_time = timezone.now().time()
-        end_time = timezone.now().time()
+        end_time = (timezone.now() - timedelta(minutes=30)).time()
 
-        data = {'slug': 'foobar', 'title': 'Foo Bar', 'date': date, 'time': time,
+        data = {'slug': 'foobar', 'title': 'Foo Bar', 'date': date,
                 'start_time': start_time, 'end_time': end_time,
                 'description': "It's a test meetup.", 'venue': 'test address'}
         form = EditMeetupForm(instance=self.meetup, data=data)

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 from django.utils import timezone
+from django.utils.timezone import timedelta
 from cities_light.models import City, Country
 from django.contrib.contenttypes.models import ContentType
 from django.core import mail
@@ -29,7 +30,7 @@ class MeetupLocationViewBaseTestCase(object):
         self.meetup = Meetup.objects.create(title='Foo Bar Baz', slug='foo-bar-baz',
                                             date=timezone.now().date(),
                                             start_time=timezone.now().time(),
-                                            end_time=timezone.now().time(),
+                                            end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                             description='This is test Meetup',
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user,
@@ -68,7 +69,7 @@ class AllUpcomingMeetupsViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.meetup2 = Meetup.objects.create(title='Bar Baz', slug='bazbar',
                                              date=(timezone.now() + timezone.timedelta(2)).date(),
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              meetup_location=self.meetup_location2,
                                              created_by=self.systers_user,
@@ -105,7 +106,7 @@ class MeetupLocationListViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.meetup2 = Meetup.objects.create(title='Bar Baz', slug='bazbar',
                                              date=(timezone.now() + timezone.timedelta(2)).date(),
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              meetup_location=self.meetup_location2,
                                              created_by=self.systers_user,
@@ -192,7 +193,7 @@ class AddMeetupViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.client.login(username='foo', password='foobar')
         date = (timezone.now() + timezone.timedelta(2)).date()
         start_time = timezone.now().time()
-        end_time = timezone.now().time()
+        end_time = (timezone.now() + timedelta(minutes=30)).time(),
         data = {'title': 'BarTest', 'slug': 'bartest', 'date': date,
                 'start_time': start_time, 'end_time': end_time,
                 'description': "It's a test meetup."}
@@ -240,11 +241,11 @@ class NewMeetupRequestsListViewTestCase(MeetupLocationViewBaseTestCase, TestCase
         super(NewMeetupRequestsListViewTestCase, self).setUp()
         self.meetup_request1 = RequestMeetup.objects.create(
             title="Bar Talk", slug="bar", date=timezone.now().date(), start_time=timezone.now().time(),
-            end_time=timezone.now().time(), description="This is a test meetup location request1", created_by=self.systers_user,
+            end_time = (timezone.now() + timedelta(minutes=30)).time(), description="This is a test meetup location request1", created_by=self.systers_user,
             meetup_location=self.meetup_location)
         self.meetup_request2 = RequestMeetup.objects.create(
             title="Foo Talk", slug="foo", date=timezone.now().date(), start_time=timezone.now().time(),
-            end_time=timezone.now().time(), description="This is a test meetup location request2", created_by=self.systers_user,
+            end_time = (timezone.now() + timedelta(minutes=30)).time(), description="This is a test meetup location request2", created_by=self.systers_user,
             meetup_location=self.meetup_location)
         self.password = 'foobar'
         self.user2 = User.objects.create(username='foobar', password=self.password,
@@ -278,7 +279,7 @@ class ViewMeetupRequestViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         super(ViewMeetupRequestViewTestCase, self).setUp()
         self.meetup_request = RequestMeetup.objects.create(
             title="Foo Talk", slug="bar", date=timezone.now().date(), start_time=timezone.now().time(),
-            end_time=timezone.now().time(), description="This is a test meetup location request", created_by=self.systers_user,
+            end_time = (timezone.now() + timedelta(minutes=30)).time(), description="This is a test meetup location request", created_by=self.systers_user,
             meetup_location=self.meetup_location)
         self.password = 'foobar'
         self.user2 = User.objects.create(username='foobar', password=self.password,
@@ -310,7 +311,7 @@ class ApproveRequestMeetupViewTestCase(MeetupLocationViewBaseTestCase, TestCase)
         super(ApproveRequestMeetupViewTestCase, self).setUp()
         self.meetup_request = RequestMeetup.objects.create(
             title="Foo Talk", slug="bar", date=timezone.now().date(), start_time=timezone.now().time(),
-            end_time=timezone.now().time(), description="This is a test meetup location request", created_by=self.systers_user,
+            end_time = (timezone.now() + timedelta(minutes=30)).time(), description="This is a test meetup location request", created_by=self.systers_user,
             meetup_location=self.meetup_location)
         self.password = 'foobar'
         self.user2 = User.objects.create(username='foobar', password=self.password,
@@ -345,7 +346,7 @@ class ApproveRequestMeetupViewTestCase(MeetupLocationViewBaseTestCase, TestCase)
         Meetup.objects.create(title='Foo Bar Baz', slug='bar',
                               date=timezone.now().date(),
                               start_time=timezone.now().time(),
-                              end_time=timezone.now().time(),
+                              end_time = (timezone.now() + timedelta(minutes=30)).time(),
                               description='This is test Meetup',
                               meetup_location=self.meetup_location,
                               created_by=self.systers_user,
@@ -361,7 +362,7 @@ class RejectMeetupRequestViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         super(RejectMeetupRequestViewTestCase, self).setUp()
         self.meetup_request = RequestMeetup.objects.create(
             title="Foo Talk", slug="bar", date=timezone.now().date(), start_time=timezone.now().time(),
-            end_time=timezone.now().time(), description="This is a test meetup request", created_by=self.systers_user,
+            end_time = (timezone.now() + timedelta(minutes=30)).time(), description="This is a test meetup request", created_by=self.systers_user,
             meetup_location=self.meetup_location)
         self.password = 'foobar'
         self.user2 = User.objects.create(username='foobar', password=self.password,
@@ -416,7 +417,7 @@ class DeleteMeetupViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.meetup2 = Meetup.objects.create(title='Fooba', slug='fooba',
                                              date=timezone.now().date(),
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is test Meetup',
                                              meetup_location=self.meetup_location,
                                              created_by=self.systers_user,
@@ -488,7 +489,7 @@ class EditMeetupView(MeetupLocationViewBaseTestCase, TestCase):
 
         date = (timezone.now() + timezone.timedelta(2)).date()
         start_time = timezone.now().time()
-        end_time = timezone.now().time()
+        end_time = (timezone.now() + timedelta(minutes=30)).time()
         data = {'title': 'BarTes', 'slug': 'bartes', 'date': date,
                 'start_time': start_time, 'end_time': end_time,
                 'description': "It's a edit test meetup."}
@@ -504,7 +505,7 @@ class UpcomingMeetupsViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.meetup2 = Meetup.objects.create(title='Bar Baz', slug='bazbar',
                                              date=(timezone.now() + timezone.timedelta(2)).date(),
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              meetup_location=self.meetup_location,
                                              created_by=self.systers_user,
@@ -529,7 +530,7 @@ class PastMeetupListViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.meetup2 = Meetup.objects.create(title='Bar Baz', slug='bazbar',
                                              date=(timezone.now() + timezone.timedelta(2)).date(),
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              meetup_location=self.meetup_location,
                                              created_by=self.systers_user,
@@ -538,7 +539,7 @@ class PastMeetupListViewTestCase(MeetupLocationViewBaseTestCase, TestCase):
         self.meetup3 = Meetup.objects.create(title='Foo Baz', slug='foobar',
                                              date=(timezone.now() - timezone.timedelta(2)).date(),
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              meetup_location=self.meetup_location,
                                              created_by=self.systers_user,
@@ -1911,7 +1912,7 @@ class ApiForVmsViewTestCase(APITestCase, TestCase):
         self.meetup = Meetup.objects.create(title='Foo Bar Baz', slug='foo-bar-baz',
                                             date='2018-06-16',
                                             start_time=timezone.now().time(),
-                                            end_time=timezone.now().time(),
+                                            end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                             description='This is test Meetup',
                                             venue='Foo Systers',
                                             meetup_location=self.meetup_location,
@@ -1922,7 +1923,7 @@ class ApiForVmsViewTestCase(APITestCase, TestCase):
         self.meetup2 = Meetup.objects.create(title='Foo Baz', slug='foobar',
                                              date='2018-06-12',
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              venue='Foo Systers',
                                              meetup_location=self.meetup_location,
@@ -1985,7 +1986,7 @@ class UpcomingMeetupsSearchViewTestCase(MeetupLocationViewBaseTestCase, TestCase
         self.meetup = Meetup.objects.create(title='Foo Bar Baz', slug='foo-bar-baz',
                                             date='2018-09-16',
                                             start_time=timezone.now().time(),
-                                            end_time=timezone.now().time(),
+                                            end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                             description='This is test Meetup',
                                             venue='Foo Systers',
                                             meetup_location=self.meetup_location,
@@ -1994,7 +1995,7 @@ class UpcomingMeetupsSearchViewTestCase(MeetupLocationViewBaseTestCase, TestCase
         self.meetup2 = Meetup.objects.create(title='Foo Baz', slug='foobar',
                                              date='2018-06-12',
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is new test Meetup',
                                              venue='Foo Systers',
                                              meetup_location=self.meetup_location,
@@ -2003,7 +2004,7 @@ class UpcomingMeetupsSearchViewTestCase(MeetupLocationViewBaseTestCase, TestCase
         self.meetup3 = Meetup.objects.create(title='Foob Baz', slug='foobarbaz',
                                              date='2018-06-13',
                                              start_time=timezone.now().time(),
-                                             end_time=timezone.now().time(),
+                                             end_time = (timezone.now() + timedelta(minutes=30)).time(),
                                              description='This is test Meetup',
                                              venue='Foo Systers',
                                              meetup_location=self.meetup_location1,
