@@ -40,8 +40,8 @@ class MeetupTestCase(MeetupBaseTestCase, TestCase):
     def setUp(self):
         super(MeetupTestCase, self).setUp()
         self.meetup = Meetup.objects.create(title="Test Meetup", slug="baz",
-                                            date=timezone.now().date(), time=timezone.now().time(),
-                                            venue="FooBar colony",
+                                            date=timezone.now().date(), start_time=timezone.now().time(),
+                                            end_time=timezone.now().time(), venue="FooBar colony",
                                             description="This is a testing meetup.",
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user)
@@ -56,8 +56,8 @@ class RequestMeetupTestCase(MeetupBaseTestCase, TestCase):
         super(RequestMeetupTestCase, self).setUp()
         self.meetup_request = \
             RequestMeetup.objects.create(title="Test Meetup Request", slug="baz",
-                                         date=timezone.now().date(), time=timezone.now().time(),
-                                         venue="FooBar colony",
+                                         date=timezone.now().date(), start_time=timezone.now().time(),
+                                         end_time=timezone.now().time(), venue="FooBar colony",
                                          description="This is a testing meetup request.",
                                          meetup_location=self.meetup_location,
                                          created_by=self.systers_user)
@@ -76,8 +76,8 @@ class RsvpTestCase(MeetupBaseTestCase, TestCase):
     def setUp(self):
         super(RsvpTestCase, self).setUp()
         self.meetup = Meetup.objects.create(title="Test Meetup", slug="baz",
-                                            date=timezone.now().date(), time=timezone.now().time(),
-                                            venue="FooBar colony",
+                                            date=timezone.now().date(), start_time=timezone.now().time(),
+                                            end_time=timezone.now().time(), venue="FooBar colony",
                                             description="This is a testing meetup.",
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user)
@@ -91,8 +91,8 @@ class SupportRequestTestCase(MeetupBaseTestCase, TestCase):
     def setUp(self):
         super(SupportRequestTestCase, self).setUp()
         self.meetup = Meetup.objects.create(title="Test Meetup", slug="baz",
-                                            date=timezone.now().date(), time=timezone.now().time(),
-                                            venue="FooBar colony",
+                                            date=timezone.now().date(), start_time=timezone.now().time(),
+                                            end_time=timezone.now().time(), venue="FooBar colony",
                                             description="This is a testing meetup.",
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user)
