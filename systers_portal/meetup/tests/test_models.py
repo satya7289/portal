@@ -41,8 +41,10 @@ class MeetupTestCase(MeetupBaseTestCase, TestCase):
     def setUp(self):
         super(MeetupTestCase, self).setUp()
         self.meetup = Meetup.objects.create(title="Test Meetup", slug="baz",
-                                            date=timezone.now().date(), start_time=timezone.now().time(),
-                                            end_time = (timezone.now() + timedelta(minutes=30)).time(), venue="FooBar colony",
+                                            date=timezone.now().date(), start_time=timezone.now().
+                                            time(),
+                                            end_time=(timezone.now() + timedelta(minutes=30)).
+                                            time(), venue="FooBar colony",
                                             description="This is a testing meetup.",
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user)
@@ -57,8 +59,10 @@ class RequestMeetupTestCase(MeetupBaseTestCase, TestCase):
         super(RequestMeetupTestCase, self).setUp()
         self.meetup_request = \
             RequestMeetup.objects.create(title="Test Meetup Request", slug="baz",
-                                         date=timezone.now().date(), start_time=timezone.now().time(),
-                                         end_time = (timezone.now() + timedelta(minutes=30)).time(), venue="FooBar colony",
+                                         date=timezone.now().date(), start_time=timezone.now().
+                                         time(),
+                                         end_time=(timezone.now() + timedelta(minutes=30)).
+                                         time(), venue="FooBar colony",
                                          description="This is a testing meetup request.",
                                          meetup_location=self.meetup_location,
                                          created_by=self.systers_user)
@@ -69,7 +73,7 @@ class RequestMeetupTestCase(MeetupBaseTestCase, TestCase):
 
     def test_get_verbose_fields(self):
         fields = self.meetup_request.get_verbose_fields()
-        self.assertEqual(len(fields), 12)
+        self.assertEqual(len(fields), 13)
         self.assertTrue(fields[1], ('Title', 'Test Meetup Request'))
 
 
@@ -77,8 +81,10 @@ class RsvpTestCase(MeetupBaseTestCase, TestCase):
     def setUp(self):
         super(RsvpTestCase, self).setUp()
         self.meetup = Meetup.objects.create(title="Test Meetup", slug="baz",
-                                            date=timezone.now().date(), start_time=timezone.now().time(),
-                                            end_time = (timezone.now() + timedelta(minutes=30)).time(), venue="FooBar colony",
+                                            date=timezone.now().date(), start_time=timezone.now().
+                                            time(),
+                                            end_time=(timezone.now() + timedelta(minutes=30)).
+                                            time(), venue="FooBar colony",
                                             description="This is a testing meetup.",
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user)
@@ -92,8 +98,10 @@ class SupportRequestTestCase(MeetupBaseTestCase, TestCase):
     def setUp(self):
         super(SupportRequestTestCase, self).setUp()
         self.meetup = Meetup.objects.create(title="Test Meetup", slug="baz",
-                                            date=timezone.now().date(), start_time=timezone.now().time(),
-                                            end_time = (timezone.now() + timedelta(minutes=30)).time(), venue="FooBar colony",
+                                            date=timezone.now().date(), start_time=timezone.now().
+                                            time(),
+                                            end_time=(timezone.now() + timedelta(minutes=30)).
+                                            time(), venue="FooBar colony",
                                             description="This is a testing meetup.",
                                             meetup_location=self.meetup_location,
                                             created_by=self.systers_user)
