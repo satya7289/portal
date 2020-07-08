@@ -24,9 +24,9 @@ class Migration(migrations.Migration):
                 ('facebook', models.URLField(max_length=255, verbose_name=b'Facebook', blank=True)),
                 ('googleplus', models.URLField(max_length=255, verbose_name=b'Google+', blank=True)),
                 ('twitter', models.URLField(max_length=255, verbose_name=b'Twitter', blank=True)),
-                ('community_admin', models.ForeignKey(related_name=b'community', verbose_name=b'Community admin', to='users.SystersUser')),
+                ('community_admin', models.ForeignKey(related_name=b'community', verbose_name=b'Community admin', to='users.SystersUser', on_delete=models.CASCADE)),
                 ('members', models.ManyToManyField(related_name=b'communities', null=True, verbose_name=b'Members', to='users.SystersUser', blank=True)),
-                ('parent_community', models.ForeignKey(verbose_name=b'Parent community', blank=True, to='community.Community', null=True)),
+                ('parent_community', models.ForeignKey(verbose_name=b'Parent community', blank=True, to='community.Community', null=True, on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name_plural': 'Communities',

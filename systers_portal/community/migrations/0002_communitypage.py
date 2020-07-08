@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('date_modified', models.DateField(auto_now=True, verbose_name=b'Date last modified')),
                 ('content', models.TextField(verbose_name=b'Content')),
                 ('order', models.IntegerField(unique=True, verbose_name=b'Order')),
-                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser')),
-                ('community', models.ForeignKey(verbose_name=b'Community', to='community.Community')),
+                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser', on_delete=models.CASCADE)),
+                ('community', models.ForeignKey(verbose_name=b'Community', to='community.Community', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,

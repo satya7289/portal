@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='community',
             name='admin',
-            field=models.ForeignKey(verbose_name='Community admin', to='users.SystersUser', related_name='community'),
+            field=models.ForeignKey(verbose_name='Community admin', to='users.SystersUser', related_name='community', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='community',
             name='parent_community',
-            field=models.ForeignKey(blank=True, verbose_name='Parent community', to='community.Community', null=True),
+            field=models.ForeignKey(blank=True, verbose_name='Parent community', to='community.Community', null=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
@@ -87,13 +87,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='communitypage',
             name='author',
-            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser'),
+            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='communitypage',
             name='community',
-            field=models.ForeignKey(verbose_name='Community', to='community.Community'),
+            field=models.ForeignKey(verbose_name='Community', to='community.Community', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(

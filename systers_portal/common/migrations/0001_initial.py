@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
                 ('is_approved', models.BooleanField(default=True, verbose_name=b'Is approved')),
                 ('body', models.TextField(verbose_name=b'Body')),
                 ('object_id', models.PositiveIntegerField()),
-                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser')),
-                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser', on_delete=models.CASCADE)),
+                ('content_type', models.ForeignKey(to='contenttypes.ContentType', on_delete=models.CASCADE)),
             ],
             options={
             },

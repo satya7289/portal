@@ -23,8 +23,8 @@ class Migration(migrations.Migration):
                 ('content', models.TextField(verbose_name=b'Content')),
                 ('is_public', models.BooleanField(default=True, verbose_name=b'Is public')),
                 ('is_monitored', models.BooleanField(default=False, verbose_name=b'Is monitored')),
-                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser')),
-                ('community', models.ForeignKey(verbose_name=b'Community', to='community.Community')),
+                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser', on_delete=models.CASCADE)),
+                ('community', models.ForeignKey(verbose_name=b'Community', to='community.Community', on_delete=models.CASCADE)),
             ],
             options={
                 'verbose_name_plural': 'News',
@@ -42,8 +42,8 @@ class Migration(migrations.Migration):
                 ('content', models.TextField(verbose_name=b'Content')),
                 ('is_public', models.BooleanField(default=True, verbose_name=b'Is public')),
                 ('is_monitored', models.BooleanField(default=False, verbose_name=b'Is monitored')),
-                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser')),
-                ('community', models.ForeignKey(verbose_name=b'Community', to='community.Community')),
+                ('author', models.ForeignKey(verbose_name=b'Author', to='users.SystersUser', on_delete=models.CASCADE)),
+                ('community', models.ForeignKey(verbose_name=b'Community', to='community.Community', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -73,7 +73,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='resource',
             name='resource_type',
-            field=models.ForeignKey(verbose_name=b'Resource type', blank=True, to='blog.ResourceType', null=True),
+            field=models.ForeignKey(verbose_name=b'Resource type', blank=True, to='blog.ResourceType', null=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(

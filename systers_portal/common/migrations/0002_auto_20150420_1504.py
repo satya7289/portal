@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='author',
-            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser'),
+            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(

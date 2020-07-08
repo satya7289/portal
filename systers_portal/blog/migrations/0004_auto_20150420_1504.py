@@ -15,13 +15,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='news',
             name='author',
-            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser'),
+            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='news',
             name='community',
-            field=models.ForeignKey(verbose_name='Community', to='community.Community'),
+            field=models.ForeignKey(verbose_name='Community', to='community.Community', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
@@ -75,13 +75,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='resource',
             name='author',
-            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser'),
+            field=models.ForeignKey(verbose_name='Author', to='users.SystersUser', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
             model_name='resource',
             name='community',
-            field=models.ForeignKey(verbose_name='Community', to='community.Community'),
+            field=models.ForeignKey(verbose_name='Community', to='community.Community', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(
@@ -117,7 +117,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='resource',
             name='resource_type',
-            field=models.ForeignKey(blank=True, verbose_name='Resource type', to='blog.ResourceType', null=True),
+            field=models.ForeignKey(blank=True, verbose_name='Resource type', to='blog.ResourceType', null=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterField(

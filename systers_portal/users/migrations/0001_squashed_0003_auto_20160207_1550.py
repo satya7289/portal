@@ -22,8 +22,8 @@ class Migration(migrations.Migration):
                 ('blog_url', models.URLField(verbose_name='Blog', max_length=255, blank=True)),
                 ('homepage_url', models.URLField(verbose_name='Homepage', max_length=255, blank=True)),
                 ('profile_picture', models.ImageField(verbose_name='Profile picture', blank=True, null=True, upload_to='users/pictures/')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-                ('country', models.ForeignKey(verbose_name='Country', to='cities_light.Country', blank=True, null=True)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('country', models.ForeignKey(verbose_name='Country', to='cities_light.Country', blank=True, null=True, on_delete=models.CASCADE)),
             ],
             options={
             },
