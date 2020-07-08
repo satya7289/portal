@@ -144,7 +144,8 @@ class RequestCommunity(models.Model):
     slug = models.SlugField(max_length=150, unique=True, verbose_name="Slug")
     order = models.PositiveIntegerField(
         null=True, blank=True, verbose_name="Order")
-    location = models.ForeignKey(City, verbose_name="Location", default="", on_delete=models.CASCADE)
+    location = models.ForeignKey(City, verbose_name="Location",
+                                 default="", on_delete=models.CASCADE)
     email = models.EmailField(max_length=255, blank=True,
                               verbose_name=" At what email address would you like to be contacted?")
     mailing_list = models.EmailField(max_length=255, blank=True,

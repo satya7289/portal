@@ -17,8 +17,10 @@ class Meetup(models.Model):
     description = models.TextField(verbose_name="Description")
     leader = models.ForeignKey(SystersUser, null=True, blank=True, related_name='community_leader',
                                verbose_name="Community leader", on_delete=models.CASCADE)
-    meetup_location = models.ForeignKey(City, verbose_name="Meetup Location", on_delete=models.CASCADE)
-    created_by = models.ForeignKey(SystersUser, null=True, verbose_name="Created By", on_delete=models.CASCADE)
+    meetup_location = models.ForeignKey(
+        City, verbose_name="Meetup Location", on_delete=models.CASCADE)
+    created_by = models.ForeignKey(
+        SystersUser, null=True, verbose_name="Created By", on_delete=models.CASCADE)
     last_updated = models.DateTimeField(auto_now=True, verbose_name="Last Update")
     meetup_picture = models.ImageField(upload_to='meetup/pictures/',
                                        blank=True,
@@ -54,8 +56,10 @@ class RequestMeetup(models.Model):
     time = models.TimeField(verbose_name="Time", blank=True)
     venue = models.CharField(max_length=512, verbose_name="Venue", blank=True)
     description = RichTextField(verbose_name="Description")
-    meetup_location = models.ForeignKey(City, verbose_name="Meetup Location", on_delete=models.CASCADE)
-    created_by = models.ForeignKey(SystersUser, null=True, verbose_name="Created By", on_delete=models.CASCADE)
+    meetup_location = models.ForeignKey(
+        City, verbose_name="Meetup Location", on_delete=models.CASCADE)
+    created_by = models.ForeignKey(
+        SystersUser, null=True, verbose_name="Created By", on_delete=models.CASCADE)
     approved_by = models.ForeignKey(SystersUser, blank=True, null=True,
                                     related_name='approvedBy', on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
