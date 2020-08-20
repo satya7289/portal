@@ -4,7 +4,6 @@ from django.utils import timezone
 from django.utils.timezone import timedelta
 from cities_light.models import City, Country
 from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
 
 
 from meetup.forms import (AddMeetupForm, EditMeetupForm,
