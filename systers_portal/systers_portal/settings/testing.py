@@ -11,11 +11,11 @@ INSTALLED_APPS += (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='systersdb'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default=5432, cast=int),
+        'NAME': config('TEST_DB_NAME', default='systersdb'),
+        'USER': config('TEST_DB_USER'),
+        'PASSWORD': config('TEST_DB_PASSWORD'),
+        'HOST': config('TEST_DB_HOST', default='localhost'),
+        'PORT': config('TEST_DB_PORT', default=5432, cast=int),
     }
 }
 
